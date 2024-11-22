@@ -28,7 +28,7 @@ Para redactar una píldora de forma sencilla, recomiendo encarecidamente el uso 
 ---
 ## Pasos para redactar una píldora :paw_prints:
 
-1. **Haz un fork** del [repositorio de las píldoras](https://github.com/FPTxurdinagaDAM/pildoras). Si no sabes cómo, consulta esta guía: [Cómo hacer un fork](https://www.freecodecamp.org/espanol/news/como-hacer-tu-primer-pull-request-en-github/).
+1. **Haz un fork** del [repositorio de las píldoras](https://github.com/2425-WAL-2DW3/Pildoras). Si no sabes cómo, consulta esta guía: [Cómo hacer un fork](https://www.freecodecamp.org/espanol/news/como-hacer-tu-primer-pull-request-en-github/).
 2. **Crea una nueva carpeta** para tu píldora en una ubicación apropiada del proyecto.
 3. **Redacta tu contenido** en un archivo Markdown dentro de esa carpeta.
    - Usa un nombre descriptivo para el archivo (por ejemplo, `como-instalar-git.md`).
@@ -56,12 +56,9 @@ Para redactar una píldora de forma sencilla, recomiendo encarecidamente el uso 
 - [Cómo hacer un pull request](https://www.freecodecamp.org/espanol/news/como-hacer-tu-primer-pull-request-en-github/)
 - [Guía básica de Markdown](https://markdown.es/)
 
----
-
-Si necesitas inspiración o quieres saber más sobre mi trabajo, visita mi perfil de GitHub [@mikeldalmauc](https://github.com/mikeldalmauc) :sparkles:
 
 ## Contacto
 
-Autor: [Mikel Dalmau](http://www.mikeldalmau.com)  
-GitHub: [@mikeldalmauc](https://github.com/mikeldalmauc)
+Autor: [Profesorado 2DW3](https://github.com/2425-WAL-2DW3)  
+GitHub: [@2425-WAL-2DW3](https://github.com/2425-WAL-2DW3)
 
