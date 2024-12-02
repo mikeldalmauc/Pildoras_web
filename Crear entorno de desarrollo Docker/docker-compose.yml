@@ -1,6 +1,25 @@
 
 services: 
 
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_ENV: ${APP_ENV:-local} # Entorno: local o production
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - XDEBUG_CLIENT_HOST=host.docker.internal
+      
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -11,6 +30,8 @@ services:
       - .:/var/www/html
     networks:
       - app-network
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:8.0

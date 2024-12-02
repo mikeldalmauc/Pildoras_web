@@ -4,6 +4,8 @@
 - [Paso 2: Agregar el contenedor de Nginx](#paso-2-agregar-el-contenedor-de-nginx)
     - [Configuración de Nginx](#configuración-de-nginx)
     - [Probando la configuración de Nginx](#probando-la-configuración-de-nginx)
+- [Instalar entorno de desarrollo Laravel con VUE](#instalar-entorno-de-desarrollo-laravel-con-vue)
+- [Referencias](#referencias)
 
 
 # Guía paso a paso para configurar un entorno de desarrollo con Docker
@@ -104,7 +106,7 @@ Si nos fijamos, en el nuevo bloque de configuración de Nginx, hemos añadido do
 
 Ahora, vamos a crear un archivo de configuración para Nginx en la carpeta **nginx** que hemos mapeado en el contenedor. En este archivo, vamos a configurar Nginx para que redirija las peticiones.
 
-El archivo de configuración de Nginx debe tener el siguiente contenido, gran parte del contenido está comentado, por ahora, vamos a dejarlo así. A medida que avancemos en el desarrollo, iremos añadiendo más configuraciones y explicando su funcionamiento.
+El archivo de configuración de Nginx debe tener el siguiente contenido. Por ahora, vamos a dejarlo así. A medida que avancemos en el desarrollo, iremos añadiendo más configuraciones y explicando su funcionamiento.
 
 ```nginx 
 server {
@@ -120,32 +122,10 @@ server {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
-    # Sirve archivos estáticos generados por Vite
-    # location /build/ {
-    #     root /var/www/html/public;
-    #     try_files $uri /index.php?$query_string;
-    #     expires 1y;
-    #     access_log off;
-    # }
-
-    # Manejo de archivos PHP
-    # location ~ \.php$ {
-    #     include snippets/fastcgi-php.conf;
-    #     fastcgi_pass laravel:9000;
-    #     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    #     include fastcgi_params;
-    # }
-
     # Denegar acceso a archivos sensibles
     location ~ /\.ht {
         deny all;
     }
-
-    # Habilitar compresión Gzip
-    # gzip on;
-    # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-    # gzip_min_length 1024;
-    # gzip_proxied any;
 }
 ```
 
@@ -212,4 +192,92 @@ Una vez que hemos creado el archivo de configuración de Nginx, vamos a arrancar
 docker-compose up -d
 ```
 
-Si te ha dado un error interno al acceder al servicio, deberías 
+Si te ha dado un error interno al acceder al servicio, es completamente normal ya que si recordais la configuración, hemos cambiado la ruta en la que ngnix sirve archivos index.php o index.html `root /var/www/html/public;`
+
+Por lo tanto, vamos a crear una página web simple de bienvenida y guardarla en la carpeta public. Nuestro entorno de desarroll debería verse así, *(sin la carpeta spetbystep)*
+
+![alt text](image-1.png)
+
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página</title>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: white;
+            color: #333;
+            overflow: hidden;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 30px;
+        }
+
+        #circle {
+            width: 350px;
+            height: 350px;
+            background-color: rgba(200, 200, 200, 0.5);
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        dotlottie-player {
+            width: 350px;
+            height: 350px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Server is up!</h1>
+        <div id="circle">
+            <dotlottie-player src="https://lottie.host/6d863761-b82b-4491-bb57-145b2c0c5870/VbwprXqzhc.lottie"
+                background="transparent" speed="1" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+</body>https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia
+
+</html>
+```
+
+Ahora sí, deberíamos ser capaces de ver la página de bienvenida que hemos creado.
+
+![alt text](image-2.png)
+
+# Instalar entorno de desarrollo Laravel con VUE
+
+Instalar laravel junto con tecnologías modernas puede ser complejo y trabajoso a la hora de configura el entorno de desarrollo y gestionar las versiones de los distintos entornos. Para esto, laravel ofrece algunas soluciones para integrar nuestros front end en el framework, [una de ellas es inertiajs Breeze and inertia](https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia) . 
+
+Concretamente, descargar y copiar el contenido de este repositorio[Demo application](https://inertiajs.com/demo-application) en la raiz de nuestro proyecto, pero sin incluir el directorio oculto de nombre `.git`.
+
+Ahora la estructura de nuestro proyecto debería verse así más o menos:
+![alt text](image-3.png)
+
+
+# Referencias 
+https://es.vite.dev/guide/
+
+https://laravel.com/docs/11.x/frontend
