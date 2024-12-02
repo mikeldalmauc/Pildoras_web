@@ -1,0 +1,52 @@
+
+services: 
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - .:/var/www/html
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    # 
+    # Estos parámetros los puedes descomentar si quieres persistir los datos de la base de datos
+    # además de mapear el puerto 3306 si necesitas acceder a la base de datos desde un cliente externo
+    # como por ejemplo MySQL Workbench
+    #
+    # volumes:
+    #  - mysql-data:/var/lib/mysql
+    # ports:
+    #  - 3306:3306
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 8081:80
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+# volumes:
+  # mysql-data:
+
+networks:
+  app-network:
