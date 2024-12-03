@@ -3,7 +3,7 @@
 El siguiente entorno de trabajo está creado principalmente a partir integrar los siguientes repositorios y añadir un conjunto de cambios para hacerlos funcionar en el nuevo setup:
 
 - [Intertia PingCRM](https://github.com/inertiajs/pingcrm)
-  - Aplicaicón de prueba de laravel
+  - Aplicaicón de prueba de laravel con Vue y Vite
   - Migraciones de prueba
   - Integración con Tailwind
   - Integración con Inertia
@@ -16,7 +16,7 @@ El siguiente entorno de trabajo está creado principalmente a partir integrar lo
   - opcache
   - Script de arranque
 - Otros cambios realizados
-  - Configuración de vite para Vue
+  - Cabmios en la configuración de vite para Vue
   - Comandos de node durante el arranque
   - Configuración de nginx 
   - Configuración de supervisor para vue
