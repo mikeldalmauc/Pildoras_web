@@ -34,8 +34,8 @@ Si queremos que se ejecuten las migraciones y seeders basta con eliminar el arch
 
 Instalar la extension Xdebug, y ejecutar, debería pararse en los breakpoints de php.
 
-![alt text](image-5.png)
-![alt text](image.png)
+![alt text](stepbystep/image-5.png)
+![alt text](stepbystep/image.png)
 
 ver [Explicación detallada de todos los ficheros de configuración](stepbystep/guide.md) para más detalle sobre la configuración del debugger.
 

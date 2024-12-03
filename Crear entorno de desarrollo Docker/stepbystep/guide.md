@@ -79,7 +79,6 @@ laravel:
     dockerfile: Dockerfile
   ports:
     - 8080:80
-    - 9003:9003  # Mapea el puerto de Xdebug
     - 5173:5173
   volumes:
     - .:/var/www/html
@@ -108,8 +107,7 @@ laravel:
    - **`dockerfile: Dockerfile`**: Especifica que se usará el archivo `Dockerfile` ubicado en el contexto para construir la imagen.
 
 2. **`ports`**:
-   - **`8080:80`**: Mapea el puerto **80** del contenedor (donde **Nginx** sirve la aplicación) al puerto **8080** de la máquina host. Accediendo a `http://localhost:8080` puedes ver la aplicación.
-   - **`9003:9003`**: Mapea el puerto **9003** para **Xdebug**. Este puerto se utiliza para la depuración remota desde herramientas como **VSCode**.
+   - **`8080:80`**: Mapea el puerto **80** del contenedor (donde **Nginx** sirve la aplicación) al puerto **8080** de la máquina host. Accediendo a `http://localhost:8080` puedes ver la aplicación..
    - **`5173:5173`**: Mapea el puerto **5173**, que es el puerto que normalmente utiliza **Vite** durante el desarrollo. Esto permite recargar automáticamente la página cuando se realizan cambios en el frontend.
 
 3. **`volumes`**:
