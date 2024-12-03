@@ -15,6 +15,8 @@ services:
     environment:
       PHP_OPCACHE_ENABLE: 1
       PRODUCTION: 0
+      XDEBUG_MODE: debug
+      XDEBUG_CLIENT_HOST: host.docker.internal
     healthcheck:
       test: ["CMD", "curl", "-f", "http://laravel/"]
       interval: 30s

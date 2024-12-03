@@ -22,8 +22,18 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 5173,  // Puedes cambiar el puerto si lo necesitas
-        hmr: {
-            host: 'localhost',
-        },
+        hmr: { host: "localhost" },
+        watch: { usePolling: true,},
     },
+    build: {
+        chunkSizeWarningLimit: 100,
+        rollupOptions: {
+          onwarn(warning, warn) {
+            if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+              return;
+            }
+            warn(warning);
+          },
+        },
+      },
 })

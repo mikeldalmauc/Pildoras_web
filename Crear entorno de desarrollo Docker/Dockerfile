@@ -9,6 +9,7 @@ RUN apk update && apk --no-cache add \
     supervisor \
     zip unzip git libzip-dev libpng-dev libjpeg-turbo-dev libwebp-dev libxpm-dev freetype-dev \
     oniguruma-dev \
+    autoconf gcc g++ make linux-headers \
     nodejs npm \
     && docker-php-ext-configure gd \
         --with-freetype \
@@ -17,7 +18,15 @@ RUN apk update && apk --no-cache add \
     && docker-php-ext-install \
     pdo_mysql mbstring exif gd opcache \
     && docker-php-ext-enable opcache
-     
+
+    
+# Instalar Xdebug para depuración
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Configurar Xdebug
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
