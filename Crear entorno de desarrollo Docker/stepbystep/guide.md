@@ -6,7 +6,7 @@
     - [Probando la configuración de Nginx](#probando-la-configuración-de-nginx)
 - [Instalar entorno de desarrollo Laravel con VUE](#instalar-entorno-de-desarrollo-laravel-con-vue)
   - [Descargar aplicacion de demo](#descargar-aplicacion-de-demo)
-  - [Configurar la base de datos](#configurar-la-base-de-datos)
+  - [Configurar la base de datos del entrorno Laravel](#configurar-la-base-de-datos-del-entrorno-laravel)
 - [Referencias](#referencias)
 
 
@@ -275,14 +275,17 @@ Instalar laravel junto con tecnologías modernas puede ser complejo y trabajoso 
 
 ## Descargar aplicacion de demo
 
-Concretamente, vamos a partir de una aplicación demo exitente. Vamos descargar y copiar el contenido de este repositorio[Demo application](https://inertiajs.com/demo-application) en la raiz de nuestro proyecto, pero sin incluir el directorio oculto de nombre `.git`.
+Concretamente, vamos a partir de una aplicación demo exitente. Vamos descargar y copiar el contenido de este repositorio,  en la raiz de nuestro proyecto, pero sin incluir el directorio oculto de nombre `.git`.
+- [Demo application Repositorio Github](https://github.com/inertiajs/pingcrm)
+- [Demo application Web](https://inertiajs.com/demo-application)
 
-Ahora la estructura de nuestro proyecto debería verse así más o menos:
-![alt text](image-3.png)
+Luego, la estructura de nuestro proyecto debería verse así:
 
-## Configurar la base de datos
+![alt text](image-4.png)
 
-En esta app de prueba, utilizan una base de datos SQLite, pero nostros, vamos a cambiar el fichero `.env.example` indicando que ahora vamos a conectarnos a una base de datos mysql, con los parámetros definidos en fichero docker-compose (el nombre del host será el nombre del contendor, ya que están en la misma red y esta inluye resolución de nombres de dominio):
+## Configurar la base de datos del entrorno Laravel
+
+En esta app de prueba, utilizan una base de datos SQLite, pero nostros, vamos a cambiar el fichero de configuración `.env.example` indicando que vamos a conectarnos a una base de datos mysql, con los parámetros definidos en fichero docker-compose (el nombre del host será el nombre del contendor, ya que están en la misma red y esta inluye resolución de nombres de dominio):
 
 ```conf
 DB_CONNECTION=mysql

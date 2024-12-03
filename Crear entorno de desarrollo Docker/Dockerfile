@@ -1,42 +1,62 @@
-# Usar una imagen base de PHP con Apache
-FROM php:8.2-apache
+FROM php:8.3-fpm-alpine
 
-# Instalar dependencias necesarias
-RUN apt-get update && apt-get install -y \
-    zip unzip git libzip-dev libpng-dev libonig-dev libxml2-dev curl npm \
-    && docker-php-ext-install \
-    pdo_mysql mbstring exif bcmath gd opcache
-
-# Instalar Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Configurar Xdebug solo en desarrollo (opcional)
-ARG APP_ENV=production
-RUN if [ "$APP_ENV" = "local" ] ; then pecl install xdebug && docker-php-ext-enable xdebug; fi
-
-# Configurar el directorio de trabajo
+# Set working directory
 WORKDIR /var/www/html
 
-# Copiar archivos del proyecto
+# Install additional packages
+RUN apk update && apk --no-cache add \
+    nginx \
+    supervisor \
+    zip unzip git libzip-dev libpng-dev libjpeg-turbo-dev libwebp-dev libxpm-dev freetype-dev \
+    oniguruma-dev \
+    nodejs npm \
+    && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
+    && docker-php-ext-install \
+    pdo_mysql mbstring exif gd opcache \
+    && docker-php-ext-enable opcache
+     
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy Nginx configuration
+COPY conf.d/nginx/default.conf /etc/nginx/nginx.conf
+
+# Copy PHP configuration
+COPY conf.d/php-fpm/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY conf.d/php/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY conf.d/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# Copy Supervisor configuration
+COPY conf.d/supervisor/supervisord.conf /etc/supervisord.conf
+
+# Create application directory if it doesn't exist
+RUN mkdir -p /var/www/html
+
+# Copy Laravel application files
 COPY . .
 
-# Instalar dependencias de Laravel
-RUN composer install --optimize-autoloader
-# RUN composer install --no-dev --no-interaction --no-progress --no-suggest --optimize-autoloader
+# Set up permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
 
-# Install Node.js dependencies
-RUN npm install
+# Scheduler setup
 
-# Build the assets
-RUN npm run build
+# Create a log file
+RUN touch /var/log/cron.log
 
-# Configure the Laravel application
-RUN cp .env.example .env
-RUN php artisan key:generate
-#RUN php artisan optimize
-#RUN php artisan storage:link
+# Add cron job directly to crontab
+RUN echo "* * * * * /usr/local/bin/php /var/www/html/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
 
-# Exponer el puerto para Apache
-EXPOSE 8080
+# Expose ports
+EXPOSE 80
 
-CMD ["/bin/bash", "/var/www/laravel/entrypoint.sh"]
+# Add entrypoint script
+ADD entrypoint.sh ./entrypoint.sh
+
+# Make entrypoint executable
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]

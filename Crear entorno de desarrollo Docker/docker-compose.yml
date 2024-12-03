@@ -5,33 +5,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        APP_ENV: ${APP_ENV:-local} # Entorno: local o production
-    volumes:
-      - .:/var/www/html
-    ports:
-      - 8000:80
-    depends_on:
-      - mysql
-    networks:
-      - app-network
-    environment:
-      - APP_ENV=${APP_ENV:-local}
-      - XDEBUG_MODE=${XDEBUG_MODE:-off}
-      - XDEBUG_CLIENT_HOST=host.docker.internal
-      
-  nginx:
-    image: nginx:latest
-    container_name: nginx
     ports:
       - 8080:80
+      - 5173:5173
     volumes:
-      - ./nginx:/etc/nginx/conf.d
       - .:/var/www/html
+      - storage-data:/var/www/html/storage
+      - vendor-data:/var/www/html/vendor
+    environment:
+      PHP_OPCACHE_ENABLE: 1
+      PRODUCTION: 0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://laravel/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - app-network
-    depends_on:
-      - mysql
 
   mysql:
     image: mysql:8.0
@@ -66,8 +56,10 @@ services:
     networks:
       - app-network
 
-# volumes:
+volumes:
   # mysql-data:
-
+  vendor-data:
+  storage-data:
+  
 networks:
   app-network:
