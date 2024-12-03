@@ -20,6 +20,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    depends_on:
+      - mysql
     networks:
       - app-network
 
