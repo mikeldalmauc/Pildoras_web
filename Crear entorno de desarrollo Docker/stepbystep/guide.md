@@ -936,7 +936,7 @@ stderr_logfile_maxbytes=0
 ### launch.json
 
 Agregamos esta configuración al archivo `.vscode/launch.json`
-
+```json
 {
     "version": "0.2.0",
     "configurations": [
@@ -958,6 +958,7 @@ Agregamos esta configuración al archivo `.vscode/launch.json`
         }
     ]
 }
+```
 
 Además neceistamos el archivo `xdebug.ini`
 
