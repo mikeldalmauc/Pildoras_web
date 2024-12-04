@@ -1,5 +1,5 @@
 
-- [Descripción de la arquitectura](#descripción-de-la-arquitectura)
+- [Arquitectura del entorno de desarrollo](#arquitectura-del-entorno-de-desarrollo)
 - [Detalle de las configuraciones](#detalle-de-las-configuraciones)
   - [Configuración del `docker-compose.yml`](#configuración-del-docker-composeyml)
     - [Descripción General](#descripción-general)
@@ -50,7 +50,11 @@
     - [launch.json](#launchjson)
 
 
-# Descripción de la arquitectura
+# Arquitectura del entorno de desarrollo
+
+![akt](daigrama3x.png)
+- [Ver diagrama](stepbystep/daigrama3x.png)
+- [Ver la explicación detallada de todos los ficheros de configuración para más detalle](stepbystep/guide.md)
 
 # Detalle de las configuraciones
 

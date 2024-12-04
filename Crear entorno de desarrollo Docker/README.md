@@ -10,6 +10,8 @@
 
 # Arquitectura de la aplicación
 
+![akt](stepbystep/daigrama3x.png)
+- [Ver diagrama fuente](stepbystep/daigrama3x.png)
 - [Ver la explicación detallada de todos los ficheros de configuración para más detalle](stepbystep/guide.md)
 
 # Operaciones comunes
